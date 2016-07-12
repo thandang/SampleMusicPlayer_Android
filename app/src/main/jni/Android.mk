@@ -9,7 +9,7 @@ LOCAL_CFLAGS    := -Wall -Wextra
 LOCAL_SRC_FILES := platform_asset_utils.c \
                    platform_log.c \
                    renderer_wrapper.c \
-				   $(CORE_RELATIVE_PATH)/asset_utils.c \
+				   $(CORE_RELATIVE_PATH)/shader_processor.c \
 				   $(CORE_RELATIVE_PATH)/buffer.c \
 				   $(CORE_RELATIVE_PATH)/block_objects.c \
                    $(CORE_RELATIVE_PATH)/player.c \

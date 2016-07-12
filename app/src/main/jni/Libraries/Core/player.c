@@ -13,6 +13,7 @@
 #include "program.h"
 #include "shader_processor.h"
 #include "../linmath/linmath.h"
+#include "block_objects.h"
 
 static const float plusX = 0.014;
 static const float bottomYCap = -0.26;
@@ -55,10 +56,10 @@ static inline float deg_to_radf(float deg) {
     return deg * (float)M_PI / 180.0f;
 }
 
+
 InputData storedInputDatas[MAX_NUM_COLUMN];
 
 
-#pragma mark - public functions
 void setup_screen() {
     glClearColor(0.3f, 0.3f, 0.3f, 1.0);
     
@@ -79,13 +80,15 @@ void on_surface_changed(int width, int height) {
  - returns: storedInputData to local control here
  */
 void initial_data(InputData listDatas[MAX_NUM_COLUMN]) {
-    for (int i = 0; i < MAX_NUM_COLUMN; i++) {
+    int i;
+    for (i = 0; i < MAX_NUM_COLUMN; i++) {
         storedInputDatas[i] = listDatas[i];
     }
 }
 
 void render_blocks() {
-    for (int i = 0; i < MAX_NUM_COLUMN; i++) {
+    int i;
+    for (i = 0; i < MAX_NUM_COLUMN; i++) {
         InputData item = updatePositionStored(storedInputDatas[i]);
         storedInputDatas[i] = item;
         renderBlockWithStepUpdate(item);
@@ -97,7 +100,8 @@ void render_blocks() {
  *  Update everytime update function from glkit invoke
  */
 void update_blocks() {
-    for (int i = 0; i < MAX_NUM_COLUMN; i++) {
+    int i;
+    for (i = 0; i < MAX_NUM_COLUMN; i++) {
         InputData tmpData = updateInputData(storedInputDatas[i]);
         storedInputDatas[i] = tmpData;
     }
@@ -116,7 +120,6 @@ void update_block_at_index(int index) {
 }
 
 
-#pragma mark - Static function
 static void renderBlockWithStepUpdate(InputData inputData) {
     mat4x4_mul(view_projection_matrix, projection_matrix, view_matrix);
     mat4x4_invert(inverted_view_projection_matrix, view_projection_matrix);
@@ -129,7 +132,8 @@ static void renderBlockWithStepUpdate(InputData inputData) {
 static void renderBarObject(InputData inputData) {
     float step = stepBlock;
     float nextPosition = BOTTOM_Y;
-    for (int i = inputData.numberOfStepItem; i >= 0; i--) {
+    int i;
+    for (i = inputData.numberOfStepItem; i >= 0; i--) {
         nextPosition = BOTTOM_Y + 0.02 + step * i;
         if (nextPosition > inputData.secondPostionY) {
             nextPosition = inputData.secondPostionY;

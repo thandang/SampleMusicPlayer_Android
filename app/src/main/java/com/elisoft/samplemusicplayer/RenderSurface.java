@@ -1,26 +1,27 @@
 package com.elisoft.samplemusicplayer;
 
+
 import android.content.Context;
 import android.graphics.Point;
-import android.opengl.GLSurfaceView;
-
+import android.opengl.GLSurfaceView.Renderer;
 
 import java.util.ArrayList;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import models.InputData;
+
 /**
  * Created by thandang on 7/11/16.
  */
-public class RenderSurface implements GLSurfaceView.Renderer {
-
+public class RenderSurface implements Renderer {
     static {
         System.loadLibrary("player");
     }
 
     private final Context context;
-    private ArrayList<InputData>datas;
+    private ArrayList<InputData> datas = new ArrayList<InputData>();
 
     public RenderSurface (Context context, int viewWidth, int viewHeight) {
         this.context = context;
@@ -40,9 +41,10 @@ public class RenderSurface implements GLSurfaceView.Renderer {
     private void addNewBlock(Point position, int width, int height) {
         Point glPoint = new Point(position.x/width, position.y/height);
         double x = glPoint.x * 2.0 - 1.0;
-        InputData item = new InputData((positionX: x, positionY: position.y, sizeStart: 32.0, sizeEnd: 32.0,
-                delta: 0.1, isDown: 0, delta2: 0.0,
-                currentPositionY: 0.0, secondPostionY: position.y, numberOfStepItem: 5, nextPosition: 0.0);
+        InputData item = new InputData();
+        item.positionX = (float)x;
+        item.positionY = (float)position.y;
+        item.secondPostionY = (float)position.y;
         datas.add(item);
     }
 
@@ -68,4 +70,5 @@ public class RenderSurface implements GLSurfaceView.Renderer {
     private  static  native void on_surface_changed(int width, int height);
     private  static  native void initial_data(ArrayList<InputData>inputDatas);
     private  static  native void update_block_at_index(int index);
+//    private  static native InputData get_input_data();
 }

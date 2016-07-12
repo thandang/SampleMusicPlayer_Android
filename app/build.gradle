@@ -5,11 +5,11 @@ android {
     buildToolsVersion "23.0.2"
 
 
-//    sourceSets {
-//        main {
-//            jni.srcDirs = []
-//        }
-//    }
+    sourceSets {
+        main {
+            jni.srcDirs = []
+        }
+    }
 
     defaultConfig {
         applicationId "com.elisoft.samplemusicplayer"

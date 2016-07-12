@@ -19,7 +19,7 @@ JNIEXPORT void JNICALL Java_com_elisoft_samplemusicplayer_RenderSurface_on_1surf
 JNIEXPORT void JNICALL Java_com_elisoft_samplemusicplayer_RenderSurface_initial_1data(JNIEnv* env, jclass cls, InputData inputData[]) {
 	UNUSED(env);
 	UNUSED(cls);
-	initial_data(&inputData);
+	initial_data(inputData);
 }
 
 JNIEXPORT void JNICALL Java_com_elisoft_samplemusicplayer_RenderSurface_render_1blocks(JNIEnv* env, jclass cls) {
@@ -40,3 +40,12 @@ JNIEXPORT void JNICALL Java_com_elisoft_samplemusicplayer_RenderSurface_update_1
 	UNUSED(cls);
 	update_block_at_index(index);
 }
+/*
+JNIEXPORT jobject JNICALL Java_com_elisoft_samplemusicplayer_RenderSurface_get_1input_1data(JNIEnv *env, jclass cls, jobject info) {
+	jclass myClass = (*env)->GetObjectClass(env, info);
+	jmethodID constructor = (*env)->GetMethodID(env, myClass, "<init>", "()/models/InputData");
+	jobject instance = (*env)->NewObject(env, myClass, constructor);
+	return instance;
+
+}
+*/

@@ -13,7 +13,8 @@
 #include "block_objects.h"
 #include "../../platform_gl.h"
 
-static const int MAX_NUM_COLUMN = 6;
+#define MAX_NUM_COLUMN 6
+
 static const int NUM_POINTS = 8;
 static const float BOTTOM_Y = -0.3;
 static const float HALF_POINT_SIZE = 17.0f;
