@@ -14,7 +14,7 @@
 #include "../linmath/linmath.h"
 #include "../../platform_gl.h"
 
-
+#define NUM_POINTS 8
 typedef struct {
     GLuint texture;
     GLuint buffer;
@@ -36,7 +36,7 @@ typedef struct {
     int   isDown; // 1 is true and 0 is false
     float delta2;
     float currentPositionY;
-    float secondPostionY;
+    float secondPositionY;
     int   numberOfStepItem;
     float nextPosition;
 } InputData;
@@ -47,7 +47,7 @@ typedef struct {
 } Block;
 
 typedef struct {
-    Particles particles[8]; //TODO: we should synchronize with NUM_POINTS 
+    Particles particles[NUM_POINTS];
     InputData itemData;
 }Bar;
 

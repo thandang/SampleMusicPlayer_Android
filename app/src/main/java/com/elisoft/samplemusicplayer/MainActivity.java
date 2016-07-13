@@ -11,8 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Choreographer;
 import android.view.Display;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {

@@ -135,8 +135,8 @@ static void renderBarObject(InputData inputData) {
     int i;
     for (i = inputData.numberOfStepItem; i >= 0; i--) {
         nextPosition = BOTTOM_Y + 0.02 + step * i;
-        if (nextPosition > inputData.secondPostionY) {
-            nextPosition = inputData.secondPostionY;
+        if (nextPosition > inputData.secondPositionY) {
+            nextPosition = inputData.secondPositionY;
         }
         if (nextPosition + inputData.delta2 < BOTTOM_Y) {
             break;
@@ -174,7 +174,7 @@ static InputData updateInputData(InputData data) {
     tmp.currentPositionY = tmp.positionY;
     
     //secondPositionY is used to draw bar, it's a little down of cap position
-    tmp.secondPostionY = tmp.positionY - distanceBar2Block;
+    tmp.secondPositionY = tmp.positionY - distanceBar2Block;
     
     //Calculate the number of item should we draw a bar
     tmp.numberOfStepItem = tmp.positionY/pointSizeHeight + 8;
