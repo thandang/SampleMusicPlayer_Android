@@ -14,6 +14,7 @@
 #include "shader_processor.h"
 #include "../linmath/linmath.h"
 #include "block_objects.h"
+#include "../common/platform_log.h"
 
 static const float plusX = 0.014;
 static const float bottomYCap = -0.26;
@@ -63,8 +64,8 @@ InputData storedInputDatas[MAX_NUM_COLUMN];
 void setup_screen() {
     glClearColor(0.3f, 0.3f, 0.3f, 1.0);
     
-    textureProgram = get_texture_program(build_program_from_assets("Block.vsh", "Block.fsh"));
-    textureProgram2 = get_texture_program(build_program_from_assets("Bar.vsh", "Bar.fsh"));
+    textureProgram = get_texture_program(build_program_from_assets("shaders/Block.vsh", "shaders/Block.fsh"));
+    textureProgram2 = get_texture_program(build_program_from_assets("shaders/Bar.vsh", "shaders/Bar.fsh"));
 }
 
 
@@ -125,7 +126,7 @@ static void renderBlockWithStepUpdate(InputData inputData) {
     mat4x4_invert(inverted_view_projection_matrix, view_projection_matrix);
     position_object_in_scene(0.7f, 0.0f, 0.0f);
     Block block = {{{0.0f, 0.0f}}, inputData};
-    pointData = generatePointData(load_png_asset_into_texture("block_64.png"), block);
+    pointData = generatePointData(load_png_asset_into_texture("textures/block_64.png"), block);
     renderBlockCover(&pointData, &textureProgram, model_view_projection_matrix, inputData);
 }
 
@@ -144,12 +145,12 @@ static void renderBarObject(InputData inputData) {
         inputData.nextPosition = nextPosition;
         
         Bar bar = {{{fixedSizeOffset, fixedPositionOffset}, {fixedSizeOffset, fixedPositionOffset}, {fixedSizeOffset, fixedPositionOffset}, {fixedSizeOffset, fixedPositionOffset}, {fixedSizeOffset, fixedPositionOffset}, {fixedSizeOffset, fixedPositionOffset}, {fixedSizeOffset, fixedPositionOffset}, {fixedSizeOffset, fixedPositionOffset}}, inputData};
-        PointData data = generateBarPointData(load_png_asset_into_texture("bar_64.png"), bar);
+        PointData data = generateBarPointData(load_png_asset_into_texture("textures/bar_64.png"), bar);
         renderBar(&data, &textureProgram2, model_view_projection_matrix, inputData);
     }
     
     Bar bottomBar = {{0.05, 0.5}, inputData};
-    PointData dataBottom = generateBarPointData(load_png_asset_into_texture("bar_32.png"), bottomBar);
+    PointData dataBottom = generateBarPointData(load_png_asset_into_texture("textures/bar_32.png"), bottomBar);
     renderBottomBar(&dataBottom, &textureProgram2, model_view_projection_matrix, inputData, plusX);
     
     renderBottomBar(&dataBottom, &textureProgram2, model_view_projection_matrix, inputData, -plusX);

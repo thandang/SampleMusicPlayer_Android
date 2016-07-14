@@ -1,0 +1,2 @@
+set solib-search-path /Users/apple/Documents/Projects/Sample/Android/SampleMusicPlayer/app/src/main/obj/local/armeabi-v7a
+directory /Users/apple/Library/Android/sdk/ndk-bundle/platforms/android-9/arch-arm/usr/include Libraries/common/ Libraries/Core/ Libraries/linmath/ Libraries/libpng /Users/apple/Documents/Projects/Sample/Android/SampleMusicPlayer/app/src/main/jni /Users/apple/Library/Android/sdk/ndk-bundle/sources/cxx-stl/system

@@ -1,5 +1,6 @@
 #include "Libraries/common/platform_asset_utils.h"
 #include "Libraries/core/macros.h"
+#include "Libraries/common/platform_log.h"
 #include <android/asset_manager_jni.h>
 #include <assert.h>
 
@@ -12,7 +13,7 @@ JNIEXPORT void JNICALL Java_com_elisoft_samplemusicplayer_PlatformFileUtils_init
 
 FileData get_asset_data(const char* relative_path) {
 	assert(relative_path != NULL);
-	AAsset* asset = AAssetManager_open(asset_manager, relative_path, AASSET_MODE_STREAMING);
+	AAsset* asset = AAssetManager_open(asset_manager, relative_path, AASSET_MODE_UNKNOWN);
 	assert(asset != NULL);
 
 	return (FileData) { AAsset_getLength(asset), AAsset_getBuffer(asset), asset };

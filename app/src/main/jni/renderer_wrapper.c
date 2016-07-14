@@ -73,7 +73,7 @@ JNIEXPORT void JNICALL Java_com_elisoft_samplemusicplayer_RenderSurface_update_1
 	update_blocks();
 }
 
-JNIEXPORT void JNICALL Java_com_elisoft_samplemusicplayer_RenderSurface_update_1block_1at_1index(JNIEnv* env, jclass cls,
+JNIEXPORT void JNICALL Java_com_elisoft_samplemusicplayer_RenderSurface_updateBlockAtIndex(JNIEnv* env, jclass cls,
 																							 jint index) {
 	UNUSED(env);
 	UNUSED(cls);

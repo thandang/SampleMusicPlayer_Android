@@ -8,6 +8,7 @@ import android.graphics.Point;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Choreographer;
 import android.view.Display;
@@ -28,6 +29,9 @@ public class MainActivity extends Activity {
 
     private double timeElapsed = 0.0;
     private int addedLevel = 6;
+
+    private RenderSurface renderSurface;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,54 +62,25 @@ public class MainActivity extends Activity {
             }
             int height = size.y;
             if (height == 0) {
-                height = 480;
+                height = 586;
             }
 
-            final RenderSurface renderSurface = new RenderSurface(this, width,
-                    height);
             glSurfaceView.setEGLContextClientVersion(2);
-            glSurfaceView.setRenderer(renderSurface);
-            rendererSet = true;
-            displayLink = Choreographer.getInstance();
-            displayLink.postFrameCallback(new Choreographer.FrameCallback() {
+            glSurfaceView.post(new Runnable() {
                 @Override
-                public void doFrame(long frameTimeNanos) {
-                    timeElapsed += 0.1;
-                    Log.d("update frame", "update frame");
-                    if (timeElapsed >= level5) {
-                        timeElapsed = 0;
-                        if (addedLevel != 5) {
-                            addedLevel = 5;
-                            renderSurface.updateBlockAtIndex(5);
-                        }
-                    } else if (timeElapsed < level5 && timeElapsed >= level4) {
-                        if (addedLevel != 4) {
-                            addedLevel = 4;
-                            renderSurface.updateBlockAtIndex(4);
-                        }
-                    } else if (timeElapsed < level4 && timeElapsed >= level3) {
-                        if (addedLevel != 3) {
-                            addedLevel = 3;
-                            renderSurface.updateBlockAtIndex(3);
-                        }
-                    } else if (timeElapsed < level3 && timeElapsed >= level2) {
-                        if (addedLevel != 2) {
-                            addedLevel = 2;
-                            renderSurface.updateBlockAtIndex(2);
-                        }
-                    } else if (timeElapsed < level2 && timeElapsed >= level1) {
-                        if (addedLevel != 1) {
-                            addedLevel = 1;
-                            renderSurface.updateBlockAtIndex(1);
-                        }
-                    } else if (timeElapsed < level1 && timeElapsed >= level0) {
-                        if (addedLevel != 0) {
-                            renderSurface.updateBlockAtIndex(0);
-                            addedLevel = 0;
-                        }
-                    }
+                public void run() {
+                    Log.d("update_frame", "update frame");
+                    renderSurface.updateBlocks();
                 }
             });
+
+            renderSurface = new RenderSurface(this, width,
+                    height);
+
+            glSurfaceView.setRenderer(renderSurface);
+            rendererSet = true;
+
+            handler = new Handler();
 
             setContentView(glSurfaceView);
         } else {
@@ -117,6 +92,58 @@ public class MainActivity extends Activity {
         }
     }
 
+    private Runnable customRunnable() {
+        Runnable myRunnable = new Runnable() {
+            @Override
+            public void run() {
+
+                timeElapsed += 0.1;
+                if (timeElapsed >= level5) {
+                    timeElapsed = 0;
+                    if (addedLevel != 5) {
+                        addedLevel = 5;
+                        renderSurface.updateBlockAtIndexNative(5);
+                    }
+                } else if (timeElapsed < level5 && timeElapsed >= level4) {
+                    if (addedLevel != 4) {
+                        addedLevel = 4;
+                        renderSurface.updateBlockAtIndexNative(4);
+                    }
+                } else if (timeElapsed < level4 && timeElapsed >= level3) {
+                    if (addedLevel != 3) {
+                        addedLevel = 3;
+                        renderSurface.updateBlockAtIndexNative(3);
+                    }
+                } else if (timeElapsed < level3 && timeElapsed >= level2) {
+                    if (addedLevel != 2) {
+                        addedLevel = 2;
+                        renderSurface.updateBlockAtIndexNative(2);
+                    }
+                } else if (timeElapsed < level2 && timeElapsed >= level1) {
+                    if (addedLevel != 1) {
+                        addedLevel = 1;
+                        renderSurface.updateBlockAtIndexNative(1);
+                    }
+                } else if (timeElapsed < level1 && timeElapsed >= level0) {
+                    if (addedLevel != 0) {
+                        renderSurface.updateBlockAtIndexNative(0);
+                        addedLevel = 0;
+                    }
+                }
+
+                handler.postDelayed(customRunnable(), 100);
+            }
+        };
+        return myRunnable;
+    }
+
+    private void stopHandle() {
+        handler.removeCallbacks(customRunnable());
+    }
+
+    private void startHandle() {
+        handler.post(customRunnable());
+    }
 
     @Override
     protected void onPause() {
@@ -124,6 +151,7 @@ public class MainActivity extends Activity {
 
         if (rendererSet) {
             glSurfaceView.onPause();
+            stopHandle();
         }
     }
 
@@ -133,6 +161,7 @@ public class MainActivity extends Activity {
 
         if (rendererSet) {
             glSurfaceView.onResume();
+            startHandle();
         }
     }
 
