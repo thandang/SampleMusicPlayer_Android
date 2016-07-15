@@ -18,7 +18,6 @@ public class MainActivity extends Activity {
 
     private GLSurfaceView glSurfaceView;
     private boolean rendererSet;
-    private Choreographer displayLink;
 
     private double level0 = 0.1;
     private double level1 = 0.25;

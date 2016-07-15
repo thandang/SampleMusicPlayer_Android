@@ -33,7 +33,7 @@ public class RenderSurface implements Renderer {
         height = viewHeight;
         PlatformFileUtils.init_asset_manager(context.getAssets());
         for (int i = 0; i < 6; i++) {
-            addNewBlock(new Point((5 - i) * 40 + 40, 0), width, height, i);
+            addNewBlock(new Point((5 - i) * 40 + 100, 0), width, height, i);
         }
         initial_data(datas);
     }
